@@ -1,0 +1,41 @@
+{
+    "items": [
+        {
+            "name": "Avengers Age Of Ultron",
+            "desc": "Github",
+            "img": "img/ET00030159.jpg",
+            "cinemas": ["Cinemax-Versova","Big cinemas","pvr","movitime","movitime","movitime","movitime"]
+        },
+        {
+            "name": "Piku",
+            "desc": "Github",
+            "img": "img/ET00025352.jpg",
+            "cinemas": ["Big cinemas","pvr"]
+        },
+       {
+            "name": "Locha",
+            "desc": "Github",
+            "img": "img/ET00028529.jpg",
+            "cinemas": ["Cinemax-Ghatkopar","Big cinemas","chandan"]
+        },
+        {
+            "name": "Hot Pursuit",
+            "desc": "Github",
+            "img": "img/ET00029331.jpg",
+            "cinemas": ["cinemax","Big cinemas"]
+        },
+        {
+            "name": "Gabbar",
+            "desc": "Github",
+            "img": "img/ET00022687.jpg",
+            "cinemas": ["pvr"]
+        },
+        {
+            "name": "Playing It Cool",
+            "desc": "Github",
+            "img": "img/ET00030429.jpg",
+            "cinemas": ["pvr"]
+        }
+        
+    ]
+}
