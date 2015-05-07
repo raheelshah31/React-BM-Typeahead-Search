@@ -1,5 +1,5 @@
-Dev Test #5
-You will be marked primarily on your problem solving approach but cleaner, well indented and beautiful code will be appreciated. Please host your work on Github and share the link with us. 
+<b>Dev Test #5<b/>
+
 Create a react component that lists Now Showing movies (refer to BookMyShow’s website) along with a search + typeahead input box that lets a User filter a Movie, Cinema or both. Cinemas here are just category filters for the Movie titles. For example if I type a Cinema named CineMax, then I should see all the movies mapped to CineMax. Another scenario is if I type “Avengers CineMax”, I should see Avengers but it’s state should include CineMax as well. To summarize, you will just list the movie names and the associated Cinemas are meta information tags.
 
 Assume the Movie/Cinema data is available in a JS Object which you can structure the way you like.
