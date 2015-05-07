@@ -16,7 +16,7 @@ var SearchArea = React.createClass({
     componentDidMount: function(url, _this, data) {
 
         $('#search').focus();
-        
+
 
 
     },
@@ -67,27 +67,27 @@ var SearchArea = React.createClass({
 
                 $.getJSON(url, function(data) {
 
-                    var items = data.items;
+                    var items = data.items; //This can be a complex Object can have timings unique Cinema Keys,Rates etc 
                     var newItems = [];
                     var q = $('#search').val();
-                    var qTemp=$('#search').val();
+                    var qTemp = $('#search').val();
                     q = q.split(" ") //if user types two or more keywords
                         // Do your searching here
                     q.forEach(function(q, a) { //itreate and refine search results for each keyword hit
                         if (q != "") { //No need to iterate if keyword is blank
                             items.forEach(function(item, i) {
                                 var qLower = q.toLowerCase();
-                                var titleLower = item.name.toLowerCase();
-                                console.log(item.name);
+                                var titleLower = item.eventName.toLowerCase();
+                                console.log(item.eventName);
                                 var cinemas = item.cinemas;
-                                var formattedTitle = highlight(item.name, q);
+                                var formattedTitle = highlight(item.eventName, q);
                                 // var formattedContent = highlight(item.content, q);
                                 var cinema;
                                 var hitFlag = false;
                                 var newHlCinemaArray = []; //Store Cinema hits highligted
 
                                 // item.formattedContent = formattedContent;
-                                item.name = formattedTitle;
+                                item.eventName = formattedTitle;
 
                                 cinemas.forEach(function(item, i) {
                                     console.log(item + " ---" + i);
@@ -95,14 +95,14 @@ var SearchArea = React.createClass({
                                     if (cinema.indexOf(qLower) != -1) {
                                         hitFlag = true;
                                         newHlCinemaArray.push(highlight(item, q)); //unique hit entries
-                                    } 
+                                    }
                                 });
-                                if(hitFlag){
-                                     item.cinemas = newHlCinemaArray;
-                                }else{
+                                if (hitFlag) {
+                                    item.cinemas = newHlCinemaArray;
+                                } else {
 
                                 }
-                               
+
                                 console.log("Naya" + item);
                                 // Add custom search criteria here
                                 if (titleLower.indexOf(qLower) !== -1 || hitFlag) {
@@ -117,13 +117,13 @@ var SearchArea = React.createClass({
                     });
 
                     console.log(newItems.length)
-                    if (!newItems.length && qTemp=="") { //If user input is blank show all the movies
+                    if (!newItems.length && qTemp == "") { //If user input is blank show all the movies
 
-                        newItems=items;
-                    } else if(qTemp!=""){
-                     
+                        newItems = items;
+                    } else if (qTemp != "") {
+
                     }
-
+                    jQuery.unique(newItems);
                     if (_this.isMounted()) {
                         _this.setState({
                             data: {
@@ -197,24 +197,24 @@ var ListItem = React.createClass({
         return (
 
             <div class="row" key={item}>
-        <div className="col-sm-6 col-md-3">
+        <div className="col-md-4">
           <div className="thumbnail">
             <img className="movImg" src={item.img}  alt="..."></img>
               <div className="caption">
-                <h3 dangerouslySetInnerHTML={{__html: item.name}}></h3>
+                <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
                 <TagCinema items={item.cinemas}/>
               </div>
             </div>
           </div>
        </div>
-      
+
         );
-        return(
-                <ReactCSSTransitionGroup transitionName="example">
+        return (
+            <ReactCSSTransitionGroup transitionName="example">
                {item}
                 </ReactCSSTransitionGroup>
 
-          )
+        )
     }
 });
 
@@ -222,12 +222,15 @@ React.render(<SearchArea api_url="api/data.json" placeholder="Search movies/cine
 
 
 var TagCinema = React.createClass({
+    componentDidMount: function(url, _this, data) {
+
+    },
     render: function() {
         return (
             <div>
         {this.props.items.map(function(answer, i) {
           return (
-             <button  className="btn btn-default btn-sm"  bsStyle='info' dangerouslySetInnerHTML={{__html: answer}}></button>
+             <button   className="btn btn-default btn-sm"  bsStyle='info' dangerouslySetInnerHTML={{__html: answer}}    onmouseover="toggelBuy()"></button>
           );
         }, this)}
       </div>
