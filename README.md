@@ -2,9 +2,9 @@
 1)Host it on a server. <br>
 <b>OR</b><br>
 2)Install python 2.7 and start the SimpleHTTPserver from the same directory and acccess the index.html page by http://localhost:8000<br>
-<img src="img/1.jpg">
-<img src="img/2.jpg">
-<img src="img/3.jpg">
+<img src="img/1.bmp">
+<img src="img/2.bmp">
+<img src="img/3.bmp">
 <b>Dev Test #5<b/>
 
 Create a react component that lists Now Showing movies (refer to BookMyShow’s website) along with a search + typeahead input box that lets a User filter a Movie, Cinema or both. Cinemas here are just category filters for the Movie titles. For example if I type a Cinema named CineMax, then I should see all the movies mapped to CineMax. Another scenario is if I type “Avengers CineMax”, I should see Avengers but it’s state should include CineMax as well. To summarize, you will just list the movie names and the associated Cinemas are meta information tags.
