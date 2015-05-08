@@ -1,10 +1,13 @@
-/* Search
+/* Search Now Showing Shows
 ==================================== */
-// Search Main
+
+//Makes things fancy adds Animation
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+// Search Main Responsible for the search logic and unique cinema and eventname tagging
 var SearchArea = React.createClass({
 
-    // Gets initial state, duh
+    // Gets initial state, duh :)
     getInitialState: function() {
         return {
             data: {
@@ -14,179 +17,162 @@ var SearchArea = React.createClass({
     },
 
     componentDidMount: function(url, _this, data) {
-
         $('#search').focus();
-
-
-
+        setTimeout(function() {
+        $("#search").trigger('click'); //had to do this for initial load of movies will remove it in the future #Todo
+    },1);
     },
 
     getResults: function(e) {
-
+ 
         var _this = this;
-
         var date = new Date();
         var q = $('#search').val();
-        var api_url = this.props.api_url;
+        var api_url = this.props.api_url
 
         switch (e.which) {
-
-            case 38: // up
-                var currentId = $('#search-results .result.active').attr('data-id');
-                var prevId = parseInt(currentId, 10) - 1;
-                $('#search-results .result').removeClass('active');
-                if (!$('#search-results #result-' + prevId).length) return false;
-                $('#search-results #result-' + prevId).addClass('active');
-                break;
-
-            case 40: // down
-                if (!$('#search-results .result.active').length) {
-
-                    $('#search-results .result').first().addClass('active');
-
-                } else {
-
-                    var currentId = $('#search-results .result.active').attr('data-id');
-                    var nextId = parseInt(currentId, 10) + 1;
-                    if (!$('#search-results #result-' + nextId).length) return false;
-                    $('#search-results .result').removeClass('active');
-                    $('#search-results #result-' + nextId).addClass('active');
-
-                }
-                break;
-
-            case 13: // enter
-                var link = $('#search-results .result.active').attr('href');
-                window.open(link);
-                break;
 
             default:
 
                 var q = $('#search').val();
-                var url = api_url + '?q=' + q + '&time=' + date.getTime(); // for yo cache
+            var url = api_url + '?q=' + q + '&time=' + date.getTime(); // for no cache
 
-                $.getJSON(url, function(data) {
+            $.getJSON(url, function(data) {
 
-                    var items = data.items; //This can be a complex Object can have timings unique Cinema Keys,Rates etc 
-                    var newItems = [];
-                    var q = $('#search').val();
-                    var qTemp = $('#search').val();
-                    q = q.split(" ") //if user types two or more keywords
-                        // Do your searching here
-                    q.forEach(function(q, a) { //itreate and refine search results for each keyword hit
-                        if (q != "") { //No need to iterate if keyword is blank
-                            items.forEach(function(item, i) {
-                                var qLower = q.toLowerCase();
-                                var titleLower = item.eventName.toLowerCase();
-                                console.log(item.eventName);
-                                var cinemas = item.cinemas;
-                                var formattedTitle = highlight(item.eventName, q);
-                                // var formattedContent = highlight(item.content, q);
-                                var cinema;
-                                var hitFlag = false;
-                                var newHlCinemaArray = []; //Store Cinema hits highligted
+                var items = data.items; //This can be a complex Object can have timings unique Cinema Keys,Rates etc
+                var newItems = [];
+                var q = $('#search').val();
+                var qTemp = $('#search').val();
+                q = q.split(" ") //if user types two or more keywords
+                    //searching here
 
-                                // item.formattedContent = formattedContent;
-                                item.eventName = formattedTitle;
+                q.forEach(function(q, a) { //itreate and refine search results for each keyword hit
 
-                                cinemas.forEach(function(item, i) {
-                                    console.log(item + " ---" + i);
-                                    cinema = item.toLowerCase();
-                                    if (cinema.indexOf(qLower) != -1) {
-                                        hitFlag = true;
-                                        newHlCinemaArray.push(highlight(item, q)); //unique hit entries
-                                    }
-                                });
-                                if (hitFlag) {
-                                    item.cinemas = newHlCinemaArray;
-                                } else {
+                    if (q != "") { //No need to iterate if keyword is blank
+                        items.forEach(function(item, i) {
+                            var qLower = q.toLowerCase();
+                            var titleLower = item.eventName.toLowerCase();
+                         //   console.log(item.eventName);
+                            var cinemas = item.cinemas;
+                            var formattedTitle = highlight(item.eventName, q);
 
+                            var cinema;
+                            var hitFlag = false;
+                            var newHlCinemaArray = []; //Store Cinema hits highligted
+
+                            item.eventName = formattedTitle;
+
+                            cinemas.forEach(function(item, i) {
+                                //console.log(item + " ---" + i);
+                                cinema = item.toLowerCase();
+                                if (cinema.indexOf(qLower) != -1) {
+                                    hitFlag = true;
+                                    newHlCinemaArray.push(highlight(item, q)); //unique hit entries
                                 }
-
-                                console.log("Naya" + item);
-                                // Add custom search criteria here
-                                if (titleLower.indexOf(qLower) !== -1 || hitFlag) {
-                                    newItems.push(item);
-                                }
-
-
-
-
                             });
-                        }
-                    });
+                            if (hitFlag) {
+                                item.cinemas = newHlCinemaArray;
+                            } else {
 
-                    console.log(newItems.length)
-                    if (!newItems.length && qTemp == "") { //If user input is blank show all the movies
-
-                        newItems = items;
-                    } else if (qTemp != "") {
-
-                    }
-                    jQuery.unique(newItems);
-                    if (_this.isMounted()) {
-                        _this.setState({
-                            data: {
-                                items: newItems
                             }
+
+
+                            
+                            // Add custom search criteria here
+                            if (titleLower.indexOf(qLower) !== -1 || hitFlag) {
+                                newItems.push(item);
+                            }
+
+
+
+
                         });
                     }
-
                 });
 
-                return; // exit this handler for other keys
+                if (!newItems.length && qTemp == "") { //If user input is blank show all the movies
+                    newItems = items;
+                } else if (qTemp != "") {
+
+                }
+                jQuery.unique(newItems); //Removes duplicate entries 
+                if (_this.isMounted()) {
+                    _this.setState({
+                        data: {
+                            items: newItems
+                        }
+                    });
+                }
+
+            });
+         
+            return; // exit this handler for other keys
         }
+
     },
 
     render: function() {
 
         return (
-            <div className="row">
-            
-     <div className="col-lg-12 " >
-      <input id="search"  className="form-control" onfocus={this.getResults}   onKeyDown={this.getResults}  type="text" placeholder={this.props.placeholder} />
-        <SearchList items={this.state.data.items} />
-   
-    </div>
-    
-    </div>
+
+
+            <div className="col-lg-12 " >
+                    
+                <input id="search"  className="form-control"   onClick={this.getResults} onKeyDown={this.getResults}   type="text" placeholder={this.props.placeholder} />
+                <SearchList items={this.state.data.items}  />
+  
+            </div>
+
+
 
 
         );
     }
 });
 
-// List Component
+// List Component responsible to get rows of data which internally is rendered by ListItem
 var SearchList = React.createClass({
+    componentDidMount: function(url, _this, data) {
+        $('#search').focus();
 
+    },
     render: function() {
 
         var rows;
+        var count
         var items = this.props.items;
-
         if (items) {
 
             rows = items.map(function(item, i) {
 
                 return (
-                    <ListItem item={item} id={i}/>
+                    <ListItem key={item.eventName} item={item} id={i}/>
                 );
+
 
             }.bind(this));
 
         }
-
+        //console.log("------------New---------------"+rows)
+        if (rows == '') {
+            $(".alert-info").show("slow")
+        } else {
+            $(".alert-info").hide("slow")
+        }
         return (
-            <ul id="search-results" >
-          {rows}
-        </ul>
+            <div className="row">
+                <ReactCSSTransitionGroup transitionName="example">
+                 {rows}
+                </ReactCSSTransitionGroup>
+            </div>
         );
+
 
     }
 
 });
 
-// List Item
+// List Item responsible to render each grid card currently the card is of size 4 in a grid of 12
 var ListItem = React.createClass({
 
     render: function() {
@@ -196,31 +182,26 @@ var ListItem = React.createClass({
 
         return (
 
-            <div class="row" key={item}>
-        <div className="col-md-4">
-          <div className="thumbnail">
-            <img className="movImg" src={item.img}  alt="..."></img>
-              <div className="caption">
-                <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
-                <TagCinema items={item.cinemas}/>
-              </div>
+
+            <div className="col-sm-6 col-md-4 col-xs-12">
+                <div className="thumbnail">
+                 <img className="movImg" src={item.img}  alt="..."></img>
+                 <div className="caption">
+                 <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
+                 <TagCinema items={item.cinemas}/>
+                 </div>
+                </div>
             </div>
-          </div>
-       </div>
+
 
         );
-        return (
-            <ReactCSSTransitionGroup transitionName="example">
-               {item}
-                </ReactCSSTransitionGroup>
 
-        )
     }
 });
 
-React.render(<SearchArea api_url="api/data.json" placeholder="Search movies/cinema"  />, document.getElementById('search-area'));
+//React.render(<SearchArea api_url="api/data.json" placeholder="Search for a movie, play, event, sport or more"  />, document.getElementById('search-area'));
 
-
+//Tag Cinema responsile to show hits of cinema for a particular event / movie.In case of blank search prints all cinema under the movie
 var TagCinema = React.createClass({
     componentDidMount: function(url, _this, data) {
 
@@ -238,10 +219,19 @@ var TagCinema = React.createClass({
     }
 })
 
+//Takes str and puts a backslash in front of every character that is part of the regular expression syntax 
 function preg_quote(str) {
     return (str + '').replace(/([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1");
 }
 
+//Higlight the keywords hit in a eventName or cinema
 function highlight(data, search) {
     return data.replace(new RegExp("(" + preg_quote(search) + ")", 'gi'), "<b>$1</b>");
 }
+
+function unmountDefaultList(){
+    //alert("unmount")
+    
+
+}
+React.render(<SearchArea api_url="api/data.json" placeholder="Search for a movie, play, event, sport or more"  />, document.getElementById('search-area'))
