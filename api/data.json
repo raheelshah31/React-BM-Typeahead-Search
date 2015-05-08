@@ -2,62 +2,72 @@
     "items": [
         {
             "eventName": "Avengers (AOU) 3D",
-            "desc": "Github",
             "img": "img/ET00030159.jpg",
-            "cinemas": ["Cinemax-Versova","Big cinemas","pvr","movitime"]
+            "cinemas": ["Cinemax-Versova","Big cinemas","pvr","movitime"],
+            "desc":"test",
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "Piku",
             "desc": "Github",
             "img": "img/ET00025352.jpg",
-            "cinemas": ["Big cinemas","pvr"]
+            "cinemas": ["Big cinemas","pvr"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
        {
             "eventName": "Locha",
             "desc": "Github",
             "img": "img/ET00028529.jpg",
-            "cinemas": ["Cinemax-Ghatkopar","Big cinemas","chandan"]
+            "cinemas": ["Cinemax-Ghatkopar","Big cinemas","chandan"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "Hot Pursuit",
             "desc": "Github",
             "img": "img/ET00029331.jpg",
-            "cinemas": ["cinemax","Big cinemas"]
+            "cinemas": ["cinemax","Big cinemas"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "Gabbar",
             "desc": "Github",
             "img": "img/ET00022687.jpg",
-            "cinemas": ["pvr"]
+            "cinemas": ["pvr"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "Playing It Cool",
             "desc": "Github",
             "img": "img/ET00030429.jpg",
-            "cinemas": ["pvr"]
+            "cinemas": ["pvr"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },{
             "eventName": "While We're Young",
             "desc": "Github",
             "img": "img/ET00027916.jpg",
-            "cinemas": ["pvr","pvr ecx"]
+            "cinemas": ["pvr","pvr ecx"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "Sabki Bajegi Band",
             "desc": "Github",
             "img": "img/ET00029753.jpg",
-            "cinemas": ["pvr","inox"]
+            "cinemas": ["pvr","inox"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
         {
             "eventName": "The Hound Of The Baskervilles",
             "desc": "Github",
             "img": "img/05042015_193232_h_the-hound-of-the-baskervilles-flash-banner-(620x250).jpg",
-            "cinemas": ["pvr","cinemax"]
+            "cinemas": ["pvr","cinemax"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         },
           {
             "eventName": "Formula 1",
             "desc": "Github",
             "img": "img/05012015_010012_ep_f1_flash_home.jpg",
-            "cinemas": ["Marina Bay, Singapore"]
+            "cinemas": ["Marina Bay, Singapore"],
+            "timings":["09:05 AM","11:55 AM","03:00 PM","06:00 PM"]
         }
         
         

@@ -1,6 +1,5 @@
 /* Search Now Showing Shows
 ==================================== */
-
 //Makes things fancy adds Animation
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
@@ -19,12 +18,13 @@ var SearchArea = React.createClass({
     componentDidMount: function(url, _this, data) {
         $('#search').focus();
         setTimeout(function() {
-        $("#search").trigger('click'); //had to do this for initial load of movies will remove it in the future #Todo
-    },1);
+            $("#search").trigger('click'); //had to do this for initial load of movies will remove it in the future #Todo
+        }, 1);
+
     },
 
     getResults: function(e) {
- 
+
         var _this = this;
         var date = new Date();
         var q = $('#search').val();
@@ -52,8 +52,9 @@ var SearchArea = React.createClass({
                         items.forEach(function(item, i) {
                             var qLower = q.toLowerCase();
                             var titleLower = item.eventName.toLowerCase();
-                         //   console.log(item.eventName);
+                            //   console.log(item.eventName);
                             var cinemas = item.cinemas;
+
                             var formattedTitle = highlight(item.eventName, q);
 
                             var cinema;
@@ -77,7 +78,7 @@ var SearchArea = React.createClass({
                             }
 
 
-                            
+
                             // Add custom search criteria here
                             if (titleLower.indexOf(qLower) !== -1 || hitFlag) {
                                 newItems.push(item);
@@ -105,7 +106,7 @@ var SearchArea = React.createClass({
                 }
 
             });
-         
+
             return; // exit this handler for other keys
         }
 
@@ -133,7 +134,7 @@ var SearchArea = React.createClass({
 // List Component responsible to get rows of data which internally is rendered by ListItem
 var SearchList = React.createClass({
     componentDidMount: function(url, _this, data) {
-        $('#search').focus();
+
 
     },
     render: function() {
@@ -174,22 +175,62 @@ var SearchList = React.createClass({
 
 // List Item responsible to render each grid card currently the card is of size 4 in a grid of 12
 var ListItem = React.createClass({
+    getInitialState: function() {
+        return {
+            flag: false
+        };
+    },
+    clickHandler: function(e) {
 
+
+        if (this.state.flag) {
+
+            this.setState({
+                flag: false
+            });
+        } else {
+
+            this.setState({
+                flag: true
+            });
+        }
+    },
     render: function() {
-
+        var _this = this;
         var item = this.props.item;
         var id = this.props.id;
+        var className;
+        console.log(this.state.flag)
+        if (this.state.flag) {
+            className = 'card flipped';
 
+        } else {
+            className = 'card'
+
+        }
         return (
 
 
-            <div className="col-sm-6 col-md-4 col-xs-12">
+
+            <div className="col-sm-6 col-md-3 col-xs-12 cards">
                 <div className="thumbnail">
-                 <img className="movImg" src={item.img}  alt="..."></img>
-                 <div className="caption">
-                 <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
-                 <TagCinema items={item.cinemas}/>
-                 </div>
+                     <img className="movImg" src={item.img}  alt="..."></img>
+                     <div className="caption">
+                      <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
+
+                        <div className="flip" onClick={this.clickHandler}>
+                                <div className={className}> 
+                                    <div className="face front"> 
+                                        <div className="well well-sm inner cinemas"> 
+                                           <TagCinema items={item.cinemas}/>
+                                        </div>
+                                    </div> 
+                                <div className="face back"> 
+                                <div className="well well-sm inner timings"> <TagCinema items={item.timings}/></div> 
+                                </div>
+                             </div>
+                        </div>    
+                </div>
                 </div>
             </div>
 
@@ -229,9 +270,9 @@ function highlight(data, search) {
     return data.replace(new RegExp("(" + preg_quote(search) + ")", 'gi'), "<b>$1</b>");
 }
 
-function unmountDefaultList(){
+function unmountDefaultList() {
     //alert("unmount")
-    
+
 
 }
 React.render(<SearchArea api_url="api/data.json" placeholder="Search for a movie, play, event, sport or more"  />, document.getElementById('search-area'))
