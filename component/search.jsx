@@ -180,6 +180,9 @@ var ListItem = React.createClass({
             flag: false
         };
     },
+    componentDidMount: function(url, _this, data) {
+       $('button').tooltip()
+    },
     clickHandler: function(e) {
 
 
@@ -200,7 +203,7 @@ var ListItem = React.createClass({
         var item = this.props.item;
         var id = this.props.id;
         var className;
-        console.log(this.state.flag)
+      //  console.log(this.state.flag)
         if (this.state.flag) {
             className = 'card flipped';
 
@@ -222,11 +225,11 @@ var ListItem = React.createClass({
                                 <div className={className}> 
                                     <div className="face front"> 
                                         <div className="well well-sm inner cinemas"> 
-                                           <TagCinema items={item.cinemas}/>
+                                           <TagCinema items={item.cinemas} flag="false" />
                                         </div>
                                     </div> 
                                 <div className="face back"> 
-                                <div className="well well-sm inner timings"> <TagCinema items={item.timings}/></div> 
+                                <div className="well well-sm inner timings"> <TagCinema items={item.timings} flag="true" /></div> 
                                 </div>
                              </div>
                         </div>    
@@ -245,14 +248,24 @@ var ListItem = React.createClass({
 //Tag Cinema responsile to show hits of cinema for a particular event / movie.In case of blank search prints all cinema under the movie
 var TagCinema = React.createClass({
     componentDidMount: function(url, _this, data) {
-
+       
     },
     render: function() {
+        var tooltip;
+        if (this.props.flag =="true") {
+                     
+            tooltip = 'Buy Tickets';
+            
+        } else {
+           
+            tooltip = 'Check Timings'
+
+        }
         return (
             <div>
         {this.props.items.map(function(answer, i) {
           return (
-             <button   className="btn btn-default btn-sm"  bsStyle='info' dangerouslySetInnerHTML={{__html: answer}}    onmouseover="toggelBuy()"></button>
+             <button   className="btn btn-default btn-sm"  bsStyle='info' dangerouslySetInnerHTML={{__html: answer}}   title={tooltip}></button>
           );
         }, this)}
       </div>
