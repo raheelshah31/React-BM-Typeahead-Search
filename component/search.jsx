@@ -254,11 +254,11 @@ var TagCinema = React.createClass({
         var tooltip;
         if (this.props.flag =="true") {
                      
-            tooltip = 'Buy Tickets';
+            tooltip = 'Click To Buy Tickets';
             
         } else {
            
-            tooltip = 'Check Timings'
+            tooltip = 'Click To Check Timings'
 
         }
         return (
