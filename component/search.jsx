@@ -215,10 +215,10 @@ var ListItem = React.createClass({
 
 
 
-            <div className="col-sm-6 col-md-3 col-xs-12 cards">
-                <div className="thumbnail">
+            <div className="col-sm-6 col-md-3 col-xs-12 cards ">
+                <div className="thumbnail ">
                      <img className="movImg" src={item.img}  alt="..."></img>
-                     <div className="caption">
+                     <div className="caption ">
                       <h3 dangerouslySetInnerHTML={{__html: item.eventName}}></h3>
 
                         <div className="flip" onClick={this.clickHandler}>
