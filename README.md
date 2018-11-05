@@ -3,6 +3,4 @@
 <b>OR</b><br>
 2)Install python 2.7 and start the SimpleHTTPserver from the same directory and acccess the index.html page by http://localhost:8000<br>
 <img src="img/1.jpg">
-<img src="img/2.jpg">
-<img src="img/3.jpg">
 Movie Search using react components .
